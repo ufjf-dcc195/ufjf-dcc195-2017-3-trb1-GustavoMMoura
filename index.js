@@ -5,5 +5,6 @@ var requestHandlers = require("./requestHandlers");
 var handlers = {};
 handlers["/"] = requestHandlers.index;
 handlers["/index.html"] = requestHandlers.index;
+handlers["/sobre.html"] = requestHandlers.sobre;
 
 server.start(router, handlers);
