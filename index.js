@@ -6,5 +6,6 @@ var handlers = {};
 handlers["/"] = requestHandlers.index;
 handlers["/index.html"] = requestHandlers.index;
 handlers["/sobre.html"] = requestHandlers.sobre;
+handlers["/aleatorios.html"] = requestHandlers.aleatorios;
 
 server.start(router, handlers);
