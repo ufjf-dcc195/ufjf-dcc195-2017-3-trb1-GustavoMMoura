@@ -1,0 +1,19 @@
+{
+  "name": "trabalho1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GustavoMMoura/ufjf-dcc195-2017-3-trb1-GustavoMMoura.git"
+  },
+  "author": "Gustavo Magalhães Moura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GustavoMMoura/ufjf-dcc195-2017-3-trb1-GustavoMMoura/issues"
+  },
+  "homepage": "https://github.com/GustavoMMoura/ufjf-dcc195-2017-3-trb1-GustavoMMoura#readme"
+}
