@@ -1,3 +1,5 @@
+var qs = require("querystring");
+
 function index(request, response) {
 	response.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
 	response.write("<h2>DCC195 - Trabalho 1</h2>");
@@ -5,6 +7,7 @@ function index(request, response) {
 	response.write("<p>");
 	response.write('<a href="/aleatorios.html">Aleatórios</a></br>');
 	response.write('<a href="/primos.html">Primos</a></br>');
+	response.write('<a href="/equacao.html">Equação</a></br>');
 	response.write('<a href="/sobre.html">Sobre</a>');
 	response.write("</p>");
 	response.end();
@@ -93,7 +96,7 @@ function primos(request, response) {
 			}
 		}
 		var reg = new RegExp(',', 'g');
-		response.writeHead(202, {"Content-Type":"text/html; charset=utf-8"});
+		response.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
 		response.write("<h2>DCC195 - Trabalho 1</h2>");
 		response.write("<p>");
 		if (primes.length === 0) {
@@ -104,7 +107,62 @@ function primos(request, response) {
 		}
 		response.write("</p>");
 	}
+	response.write("<p>");
+	response.write('<a href="/index.html">Voltar</a>');
+	response.write("</p>");
 	response.end();
 }
-
 exports.primos = primos;
+
+function raizes(a, b, c) {
+	var delta = b*b - 4*a*c;
+	if (delta < 0) {
+		return " não tem raízes reais";
+	} else if (delta === 0) {
+		return " possui uma única raiz real igual a " + -b/(2 * a);
+	} else {
+		var r1 = (-b + Math.sqrt(delta)) / (2 * a);
+		var r2 = (-b - Math.sqrt(delta)) / (2 * a);
+		return " com raízes reais " + r1 + " e " + r2 + ".";
+	}
+}
+
+function equacao(request, response) {
+	var body = '';
+	request.on('data', function(data)  {
+		body += data;
+	});		
+	request.on('end', function(data)  {
+		var dados = qs.parse(body);			
+		var a = parseInt(dados.a);
+		var b = parseInt(dados.b);
+		var c = parseInt(dados.c);
+		var resp = "Equação: ";
+		response.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
+		response.write("<h2>DCC195 - Trabalho 1</h2>");
+		if(request.method == "POST") {
+			if (isNaN(a) || isNaN(b) || isNaN(c) || a <= 0) {
+				response.write("<div>Termos inválidos.</div>");
+			} else {
+				resp += (a === 1 ? "" : a) + "x<sup>2</sup>";
+				resp += (b === 0 ? "" : ((b < 0 ? " - " : " + ") + (Math.abs(b) === 1 ? "" : Math.abs(b)) + "x"));
+				resp += (c === 0 ? "" : ((c < 0 ? " - " : " + ") + Math.abs(c))) + " = 0";
+				response.write("<div>" + resp + raizes(a, b, c) + "</div>");
+			}
+		}
+		response.write("<p>");
+		response.write("Insira os termos da equação: ax<sup>2</sup> + bx + c = 0");
+		response.write("<form method=post >");
+		response.write("a: <input type=number name=a /></br>");
+		response.write("b: <input type=number name=b /></br>");
+		response.write("c: <input type=number name=c /></br>");
+		response.write("<input type=submit />");
+		response.write("</form>");
+		response.write("</p>");	
+		response.write("<p>");
+		response.write('<a href="/index.html">Voltar</a>');
+		response.write("</p>");	
+		response.end();
+	});
+}
+exports.equacao = equacao;
