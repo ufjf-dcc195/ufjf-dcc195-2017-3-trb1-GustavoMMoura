@@ -1,4 +1,5 @@
 var qs = require("querystring");
+var tabuleiro = require("./tabuleiro");
 
 function index(request, response) {
 	response.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
@@ -8,6 +9,7 @@ function index(request, response) {
 	response.write('<a href="/aleatorios.html">Aleatórios</a></br>');
 	response.write('<a href="/primos.html">Primos</a></br>');
 	response.write('<a href="/equacao.html">Equação</a></br>');
+	response.write('<a href="/xadrez.html">Xadrez</a></br>');
 	response.write('<a href="/sobre.html">Sobre</a>');
 	response.write("</p>");
 	response.end();
@@ -158,11 +160,43 @@ function equacao(request, response) {
 		response.write("c: <input type=number name=c /></br>");
 		response.write("<input type=submit />");
 		response.write("</form>");
-		response.write("</p>");	
+		response.write("</p>");
 		response.write("<p>");
 		response.write('<a href="/index.html">Voltar</a>');
-		response.write("</p>");	
+		response.write("</p>");
 		response.end();
 	});
 }
 exports.equacao = equacao;
+
+function xadrez(request, response) {
+	var body = '';
+	request.on('data', function(data)  {
+		body += data;
+	});		
+	request.on('end', function(data)  {
+		var dados = qs.parse(body);			
+		var linha = parseInt(dados.linha);
+		var coluna = parseInt(dados.coluna);
+		
+		response.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
+		response.write("<h2>DCC195 - Trabalho 1</h2>");
+		response.write("<form method=post >");
+		response.write("<table>");
+		response.write("<tr><td>linha:</td><td><input type=number name=linha min=1 max=8 /></td></tr>");
+		response.write("<tr><td>coluna:</td><td><input type=number name=coluna min=1 max=8 /></td></tr>");
+		response.write("</table>");
+		response.write("<input type=submit />");
+		response.write("</form>");
+
+		if(request.method == "POST" && (isNaN(linha) || isNaN(coluna))) {
+			response.write("<p>Valores inválidos.</p>");
+		}
+		response.write(tabuleiro.desenharTabuleiro(linha, coluna));
+		response.write("<p>");
+		response.write('<a href="/index.html">Voltar</a>');
+		response.write("</p>");
+		response.end();
+	});
+}
+exports.xadrez = xadrez;

@@ -9,5 +9,6 @@ handlers["/sobre.html"] = requestHandlers.sobre;
 handlers["/aleatorios.html"] = requestHandlers.aleatorios;
 handlers["/primos.html"] = requestHandlers.primos;
 handlers["/equacao.html"] = requestHandlers.equacao;
+handlers["/xadrez.html"] = requestHandlers.xadrez;
 
 server.start(router, handlers);
