@@ -25,8 +25,8 @@ function desenharTabuleiro(linha, coluna) {
 	                   "</tr></thead>" +
 	                   "<tbody>";
 
-	linha = (!linha ? -1 : linha);
-	coluna = (!coluna ? -1 : coluna);
+	console.log("linha:", linha);
+	console.log("coluna:", coluna);
 
 	var c = 1;
 	for (var i = 0; i < 8; i++) {
