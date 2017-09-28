@@ -10,6 +10,7 @@ function index(request, response) {
 	response.write('<a href="/primos.html">Primos</a></br>');
 	response.write('<a href="/equacao.html">Equação</a></br>');
 	response.write('<a href="/xadrez.html">Xadrez</a></br>');
+	response.write('<a href="/xadrez.json">Xadrez Json</a></br>');
 	response.write('<a href="/sobre.html">Sobre</a>');
 	response.write("</p>");
 	response.end();
@@ -183,8 +184,26 @@ function xadrez(request, response) {
 		response.write("<h2>DCC195 - Trabalho 1</h2>");
 		response.write("<form method=post >");
 		response.write("<table>");
-		response.write("<tr><td>linha:</td><td><input type=number name=linha min=1 max=8 /></td></tr>");
-		response.write("<tr><td>coluna:</td><td><input type=number name=coluna min=1 max=8 /></td></tr>");
+		response.write("<tr><td>Coluna:</td><td><select type=number name=coluna  />");
+		response.write("<option value=0 >A</option>");
+		response.write("<option value=1 >B</option>");
+		response.write("<option value=2 >C</option>");
+		response.write("<option value=3 >D</option>");
+		response.write("<option value=4 >E</option>");
+		response.write("<option value=5 >F</option>");
+		response.write("<option value=6 >G</option>");
+		response.write("<option value=7 >H</option>");
+		response.write("</select></td></tr>");
+		response.write("<tr><td>Linha:</td><td><select type=number name=linha  />");
+		response.write("<option value=0 >8</option>");
+		response.write("<option value=1 >7</option>");
+		response.write("<option value=2 >6</option>");
+		response.write("<option value=3 >5</option>");
+		response.write("<option value=4 >4</option>");
+		response.write("<option value=5 >3</option>");
+		response.write("<option value=6 >2</option>");
+		response.write("<option value=7 >1</option>");
+		response.write("</select></td></tr>");
 		response.write("</table>");
 		response.write("<input type=submit />");
 		response.write("</form>");
@@ -200,3 +219,57 @@ function xadrez(request, response) {
 	});
 }
 exports.xadrez = xadrez;
+
+
+function xadrezJason(request, response) {
+    var body = '';
+	request.on('data', function(data)  {
+		body += data;
+	});		
+	request.on('end', function(data)  {
+		var dados = qs.parse(body);			
+		var linha = parseInt(dados.linha);
+		var coluna = parseInt(dados.coluna);
+		if(request.method == "GET" || (request.method == "POST" && isNaN(linha) || isNaN(coluna))) {
+		    response.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
+		    response.write("<h2>DCC195 - Trabalho 1</h2>");
+			response.write("<form method=post >");
+			response.write("<table>");
+			response.write("<tr><td>Coluna:</td><td><select type=number name=coluna  />");
+			response.write("<option value=0 >A</option>");
+			response.write("<option value=1 >B</option>");
+			response.write("<option value=2 >C</option>");
+			response.write("<option value=3 >D</option>");
+			response.write("<option value=4 >E</option>");
+			response.write("<option value=5 >F</option>");
+			response.write("<option value=6 >G</option>");
+			response.write("<option value=7 >H</option>");
+			response.write("</select></td></tr>");
+			response.write("<tr><td>Linha:</td><td><select type=number name=linha  />");
+			response.write("<option value=0 >8</option>");
+			response.write("<option value=1 >7</option>");
+			response.write("<option value=2 >6</option>");
+			response.write("<option value=3 >5</option>");
+			response.write("<option value=4 >4</option>");
+			response.write("<option value=5 >3</option>");
+			response.write("<option value=6 >2</option>");
+			response.write("<option value=7 >1</option>");
+			response.write("</select></td></tr>");
+			response.write("</table>");
+			response.write("<input type=submit />");
+			response.write("</form>");
+		    if(request.method == "POST" && (isNaN(linha) || isNaN(coluna))) {
+    			response.write("<p>Valores inválidos.</p>");
+		    }
+			response.write(tabuleiro.desenharTabuleiro());
+		    response.write("<p>");
+		    response.write('<a href="/index.html">Voltar</a>');
+		    response.write("</p>");
+			response.end();
+		} else {
+		    response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify(tabuleiro.getJsonResponse(linha, coluna)));
+		}
+	});
+}
+exports.xadrezJason = xadrezJason;
