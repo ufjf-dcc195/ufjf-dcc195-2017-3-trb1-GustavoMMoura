@@ -1,0 +1,22 @@
+{
+  "name": "trabalho1",
+  "version": "1.0.0",
+  "engines": {
+    "node": "6.11.2"
+  },
+  "description": "Trabalho 1 - DCC195",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GustavoMMoura/ufjf-dcc195-2017-3-trb1-GustavoMMoura.git"
+  },
+  "author": "Gustavo Magalhães Moura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GustavoMMoura/ufjf-dcc195-2017-3-trb1-GustavoMMoura/issues"
+  },
+  "homepage": "https://github.com/GustavoMMoura/ufjf-dcc195-2017-3-trb1-GustavoMMoura#readme"
+}
